@@ -1,0 +1,184 @@
+﻿<Window x:Class="Automation_Net_Core.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Automation_Net_Core"
+        mc:Ignorable="d"
+        Title="Automation Net Core" Height="450" Width="800" Icon="/OIG2.mR6T_2CK.jpg">
+    
+    <Window.Resources>
+        <Storyboard x:Key="RectangleAnimation" RepeatBehavior="Forever">
+            <DoubleAnimation
+             Storyboard.TargetName="rect1"
+             Storyboard.TargetProperty="Height"
+             From="0" To="10" Duration="0:0:0.25" AutoReverse="True"/>
+            <DoubleAnimation
+             Storyboard.TargetName="rect2"
+             Storyboard.TargetProperty="Height"
+             From="0" To="10" Duration="0:0:0.5" AutoReverse="True"/>
+            <DoubleAnimation
+             Storyboard.TargetName="rect3"
+             Storyboard.TargetProperty="Height"
+             From="0" To="10" Duration="0:0:0.75" AutoReverse="True"/>
+            <DoubleAnimation
+             Storyboard.TargetName="rect4"
+             Storyboard.TargetProperty="Height"
+             From="0" To="10" Duration="0:0:1.000" AutoReverse="True"/>
+            <DoubleAnimation
+             Storyboard.TargetName="rect5"
+             Storyboard.TargetProperty="Height"
+             From="0" To="10" Duration="0:0:1.275" AutoReverse="True"/>
+        </Storyboard>
+
+
+    </Window.Resources>
+    <Grid>
+        <!-- Pulsating Border -->
+        <Border x:Name="glowingBorder" BorderBrush="Green" BorderThickness="1">
+            <Border.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+
+                    <BeginStoryboard Storyboard="{StaticResource RectangleAnimation}" />
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="glowingBorder"
+                     Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
+                                <LinearColorKeyFrame Value="Green" KeyTime="0:0:0"/>
+                                <LinearColorKeyFrame Value="LightBlue" KeyTime="0:0:2"/>
+                                <LinearColorKeyFrame Value="Green" KeyTime="0:0:4"/>
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Border.Triggers>
+          </Border>
+
+        <Grid>
+            <!-- Title Bar -->
+            <Border Background="#222" Height="40" VerticalAlignment="Top">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="textTitleBar" Text=" " HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="18"/>
+                    
+                    
+                </Grid>
+            </Border>
+
+            <!-- Content Area -->
+            <Border Background="#333" Margin="0,40,0,0">
+                <!-- Your manufacturing content goes here -->
+            </Border>
+
+            <!-- Resizer Grip -->
+            <Grid x:Name="ControlsGrid">
+                <!-- Add Visibility property binding to the Grid -->
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding isResizing}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Grid>
+                    <!-- Black square background -->
+                    <Rectangle Fill="Black" Margin="15" Width="50" Height="10" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Rectangle.RadiusX>5</Rectangle.RadiusX>
+                        <Rectangle.RadiusY>5</Rectangle.RadiusY>
+                    </Rectangle>
+                    <!-- Rectangles to animate -->
+                    <StackPanel Orientation="Horizontal"  Margin="15" HorizontalAlignment="Left" Height="10" VerticalAlignment="Top">
+                        <Rectangle x:Name="rect1" Fill="LightGreen" Width="10" Height="0" VerticalAlignment="Bottom">
+                            <Rectangle.RadiusX>5</Rectangle.RadiusX>
+                            <Rectangle.RadiusY>5</Rectangle.RadiusY>
+                        </Rectangle>
+                        <Rectangle x:Name="rect2" Fill="LightGreen" Width="10" Height="0" VerticalAlignment="Bottom">
+                            <Rectangle.RadiusX>5</Rectangle.RadiusX>
+                            <Rectangle.RadiusY>5</Rectangle.RadiusY>
+                        </Rectangle>
+                        <Rectangle x:Name="rect3" Fill="LightGreen" Width="10" Height="0" VerticalAlignment="Bottom">
+                            <Rectangle.RadiusX>5</Rectangle.RadiusX>
+                            <Rectangle.RadiusY>5</Rectangle.RadiusY>
+                        </Rectangle>
+                        <Rectangle x:Name="rect4" Fill="LightGreen" Width="10" Height="0" VerticalAlignment="Bottom">
+                            <Rectangle.RadiusX>5</Rectangle.RadiusX>
+                            <Rectangle.RadiusY>5</Rectangle.RadiusY>
+                        </Rectangle>
+                        <Rectangle x:Name="rect5" Fill="LightGreen" Width="10" Height="0" VerticalAlignment="Bottom">
+                            <Rectangle.RadiusX>5</Rectangle.RadiusX>
+                            <Rectangle.RadiusY>5</Rectangle.RadiusY>
+                        </Rectangle>
+                    </StackPanel>
+
+                    <Path Fill="Transparent" Stroke="LightGreen"  Margin="5" StrokeThickness="2" Width="20" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Data="M10,0 A10,10,0,0,1,10,20">
+                        <Path.RenderTransform>
+                            <RotateTransform x:Name="circleRotation" CenterX="10" CenterY="10" />
+                        </Path.RenderTransform>
+                        <Path.Triggers>
+                            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <DoubleAnimation
+                        Storyboard.TargetName="circleRotation"
+                        Storyboard.TargetProperty="Angle"
+                        From="0" To="360" Duration="0:0:2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Path.Triggers>
+                    </Path>
+
+                    <StackPanel Orientation="Horizontal"  Margin="15" HorizontalAlignment="Right" Width="50" Height="25" VerticalAlignment="Bottom">
+                        <Path Stroke="LightGreen" StrokeThickness="2"  VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                            <Path.Data>
+                                <GeometryGroup>
+                                    <LineGeometry x:Name="line1" StartPoint="10,10" EndPoint="20,0"/>
+                                    <LineGeometry x:Name="line2" StartPoint="20,10" EndPoint="20,0"/>
+                                    <LineGeometry x:Name="line3" StartPoint="20,10" EndPoint="30,0"/>
+                                    <LineGeometry x:Name="line4" StartPoint="30,10" EndPoint="30,0"/>
+                                    <LineGeometry x:Name="line5" StartPoint="30,10" EndPoint="40,0"/>
+                                    <LineGeometry x:Name="line6" StartPoint="40,10" EndPoint="40,0"/>
+                                    <LineGeometry x:Name="line7" StartPoint="40,10" EndPoint="50,0"/>
+                                    <LineGeometry x:Name="line8" StartPoint="50,10" EndPoint="50,0"/>
+                                    <LineGeometry x:Name="line9" StartPoint="60,10" EndPoint="50,0"/>
+                                    <LineGeometry x:Name="line10" StartPoint="60,10" EndPoint="60,0"/>
+                                </GeometryGroup>
+                            </Path.Data>
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <TranslateTransform x:Name="translateTransform"/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                            <Path.Triggers>
+                                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard RepeatBehavior="Forever">
+                                            <DoubleAnimation
+Storyboard.TargetName="translateTransform"
+Storyboard.TargetProperty="X"
+From="0" To="10" Duration="0:0:2" AutoReverse="False"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Path.Triggers>
+                        </Path>
+                    </StackPanel>
+                </Grid>
+
+
+
+
+
+
+
+
+            </Grid>
+            
+        </Grid>
+    </Grid>
+</Window>
